@@ -9,7 +9,7 @@ const inputComponent = animInput.inputComponent;
 export const addMediaComponent = new Component("div", {}, [
   animInput.component
 ]);
-const attachClkListener = child => {
+const attachClkListener = (child, title) => {
   child.attachEventListener(
     "click",
     async function() {
@@ -59,9 +59,9 @@ async function handleKeyDown(e) {
                 "width:65%;margin:auto;text-decoration:underline;cursor:pointer"
             }
           );
-          attachClkListener(child);
+          attachClkListener(child, title);
           children.push(child);
-          addMediaComponent.addChild(new Component("div", {}, children));
+          addMediaComponent.addChild(new Component("div", {}, children), false);
           addMediaComponent.update();
         }
       } else {
