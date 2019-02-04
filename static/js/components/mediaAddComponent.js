@@ -9,6 +9,26 @@ const inputComponent = animInput.inputComponent;
 export const addMediaComponent = new Component("div", {}, [
   animInput.component
 ]);
+const attachClkListener = child => {
+  child.attachEventListener(
+    "click",
+    async function() {
+      const $resp = await Requests.get(
+        `/api/add/tv-show/lookup?${urlencode({ s: this.getState.url })}`
+      );
+      const resp = await $resp.text();
+      addMediaComponent.destroyChildComponents(false, true);
+      addMediaComponent.$element.appendChild(new TextComponent(resp));
+      const a = document.createElement("a");
+      a.href = `#/search?${urlencode({ q: title })}`;
+      a.style.margin = "auto";
+      a.style.display = "block";
+      a.innerHTML = `Search for ${title}`;
+      addMediaComponent.$element.appendChild(a);
+      //   addMediaComponent.appendChild(a);
+    }.bind(child)
+  );
+};
 async function handleKeyDown(e) {
   if (e.keyCode === 13) {
     const $c = TextComponent.find("$$", addMediaComponent.$element)[0];
@@ -39,24 +59,7 @@ async function handleKeyDown(e) {
                 "width:65%;margin:auto;text-decoration:underline;cursor:pointer"
             }
           );
-          child.attachEventListener(
-            "click",
-            async function() {
-              const $resp = await Requests.get(
-                `/api/add/tv-show/lookup?${urlencode({ s: this.getState.url })}`
-              );
-              const resp = await $resp.text();
-              addMediaComponent.destroyChildComponents(false, true);
-              addMediaComponent.$element.appendChild(new TextComponent(resp));
-              const a = document.createElement("a");
-              a.href = `#/search?${urlencode({ q: title })}`;
-              a.style.margin = "auto";
-              a.style.display = "block";
-              a.innerHTML = `Search for ${title}`;
-              addMediaComponent.$element.appendChild(a);
-              //   addMediaComponent.appendChild(a);
-            }.bind(child)
-          );
+          attachClkListener(child);
           children.push(child);
           addMediaComponent.addChild(new Component("div", {}, children));
           addMediaComponent.update();
