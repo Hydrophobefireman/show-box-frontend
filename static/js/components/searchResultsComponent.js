@@ -60,6 +60,7 @@ searchResultsComponent.onAttached = wasRendered => {
   const value = inputComponent.getState.value;
   const qr = currentRouteData.qs.get("q");
   if (wasRendered) {
+    getAsYouTypeResponseComponent();
     searchAndParseResults(qr);
   }
   if (qr !== value && qr) {
@@ -68,7 +69,6 @@ searchResultsComponent.onAttached = wasRendered => {
     }
     inputComponent.setState({ value: qr });
   }
-
   buttonComponent.attachEventListener(
     "click",
     handleButtonClick.bind(buttonComponent),
