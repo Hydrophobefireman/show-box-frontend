@@ -9,11 +9,11 @@ import { outComponent } from "./components/outComponent.js";
 import { addMediaComponent } from "./components/mediaAddComponent.js";
 import { allComponent } from "./components/allMoviesComponent.js";
 import { Requests } from "./services/httpService.js";
-import { retry } from "./common.js";
+import { retry, applyExternalCss } from "./common.js";
 window.oldTitle = document.title;
 const appRoot = $.id("app-root");
 const router = new Router(appRoot);
-
+applyExternalCss("https://fonts.googleapis.com/css?family=Open+Sans");
 const obj = {
   "/": indexComponent,
   "/search/": searchResultsComponent,

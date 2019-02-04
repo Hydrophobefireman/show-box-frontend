@@ -32,3 +32,16 @@ export const nextEvent = (target, name) =>
   new Promise(resolve =>
     target.addEventListener(name, resolve, { once: true })
   );
+export const applyExternalCss = async a => {
+  let b;
+  try {
+    return (
+      (b = document.createElement("link")),
+      (b.href = a),
+      (b.rel = "stylesheet"),
+      document.head.appendChild(b)
+    );
+  } catch (e) {
+    console.log("Could not append stylesheet", e);
+  }
+};
