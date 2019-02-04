@@ -49,8 +49,14 @@ class IframeComponent extends Component {
         frameEl.$element.src !== state.selectedURL)
     ) {
       frameEl.$element.src = loadingHTML;
+      if (!state.selectedURL) {
+        return;
+      }
       return setTimeout(
-        () => frameEl.setDomAttrs({ src: state.selectedURL }, true),
+        () =>
+          state.selectedURL
+            ? frameEl.setDomAttrs({ src: state.selectedURL }, true)
+            : void 0,
         700
       );
     }
@@ -60,8 +66,10 @@ class IframeComponent extends Component {
     );
     this.setState({ previousEP: episodeNumber }, false);
     this.setState({ URLArray }, false);
-    frameEl.setDomAttrs({ src: primaryURL }, false);
-    this.children[0].data = `Now Playing: Episode:${episodeNumber}`;
+    if (primaryURL) {
+      frameEl.setDomAttrs({ src: primaryURL }, false);
+      this.children[0].data = `Now Playing: Episode:${episodeNumber}`;
+    }
     this.updateChildren(this.$element);
     this.updateDOMAttrs();
   }
