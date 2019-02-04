@@ -34,10 +34,11 @@ const generateComponents = data => {
       className: "show-link"
     }).attachEventListener("click", e => {
       e.preventDefault();
+      getResponseComponent();
       loadHash(
         `/watch?${urlencode({
           id: child.getState.id,
-          show: sanitizedName(showName)
+          show: sanitizedName(child.getState.showName)
         })}`
       );
     });

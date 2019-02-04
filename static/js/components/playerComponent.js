@@ -92,6 +92,7 @@ playerComponent.onAttached = async () => {
     );
   }
   iframeSelectorComponent.setState({ showID }, !1);
+  episodeSelectorComponent.destroyChildComponents(false, true);
   addEpisodes(episodeSelectorComponent, metaData.episode_meta);
   currentShowName.textContent = `Watch: ${metaData.movie_name}  (${
     metaData.episode_meta
