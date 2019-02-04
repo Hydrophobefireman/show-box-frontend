@@ -22,9 +22,6 @@ const obj = {
   "/media/": addMediaComponent,
   "/all/": allComponent
 };
-for (const [k, v] of Object.entries(obj)) {
-  router.registerComponent(k, v);
-}
 
 appRoot.innerHTML = "Connecting to server";
 retry(
@@ -32,4 +29,10 @@ retry(
   3,
   () => (appRoot.innerHTML = "could not connect"),
   200
-).then(router.startLoad);
+).then(() => {
+  for (const [k, v] of Object.entries(obj)) {
+    router.registerComponent(k, v);
+  }
+  appRoot.innerHTML = "";
+  router.startLoad();
+});
