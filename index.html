@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Watch TV Shows on Show-Box</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="header">
+      <div
+        router-header
+        _routerEvt="onclick"
+        _routerAct="if($event.ctrlKey){return};$event.stopPropagation();this.load('/')"
+        class="banner-button"
+        _routerif="this.currentRoute!=='/'"
+      >
+        <a class="router-link" href="#/">Home Page</a>
+      </div>
+      <div
+        router-header
+        class="banner-button"
+        _routerEvt="onclick"
+        _routerAct="if($event.ctrlKey){return};$event.stopPropagation();this.load('/all')"
+        _routerif="this.currentRoute!=='/all/'"
+      >
+        <a class="router-link" href="#/all">All Shows</a>
+      </div>
+    </div>
+    <div class="center">
+      <div>
+        <div id="app-root"></div>
+      </div>
+    </div>
+  </body>
+</html>
