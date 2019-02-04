@@ -32,8 +32,7 @@ const generateComponents = data => {
     const link = new Component("a", {}, [new TextComponent(showName, showID)], {
       href: `#${url}`,
       className: "show-link"
-    }).attachEventListener("click", e => {
-      e.preventDefault();
+    }).attachEventListener("click", () => {
       getResponseComponent();
       loadHash(
         `/watch?${urlencode({
