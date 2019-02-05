@@ -5,12 +5,13 @@ import { asYouTypeComponent, animatedInputComponent } from "./index.js";
 import { parseHash } from "../router/routerUtils.js";
 import {
   searchShows,
-  createResponseComponents
+  createResponseComponents,
+  createResponseComponentsSync
 } from "../services/searchService.js";
 import { getResponseComponent as getAsYouTypeResponseComponent } from "./socketResponseParser.js";
 const buttonComponent =
   asYouTypeComponent.children[asYouTypeComponent.children.length - 1];
-const responseComponent = createResponseComponents();
+const responseComponent = createResponseComponentsSync();
 const loadingComponent = new TextComponent("Searching");
 
 export const searchResultsComponent = new Component("div", {}, [
@@ -27,7 +28,7 @@ const searchAndParseResults = async q => {
       responseComponent
     );
   }
-  createResponseComponents(data);
+  await createResponseComponents(data);
   if (loadingComponent.isConnected) {
     loadingComponent.destroyComponent();
   }

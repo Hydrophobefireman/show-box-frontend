@@ -37,7 +37,7 @@ allComponent.onAttached = async () => {
     { "content-type": "application/json" }
   );
   const resp = await data.json();
-  const components = generateComponents(resp.movies);
+  const components = await generateComponents(resp.movies);
   resComponent.destroyChildComponents(false, true);
   components.forEach(c => {
     resComponent.addChild(c, false);

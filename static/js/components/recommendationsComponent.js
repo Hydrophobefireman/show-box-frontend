@@ -3,7 +3,7 @@ import { Requests } from "../services/httpService.js";
 import { TextComponent } from "../router/utils.js";
 import { loadHash, urlencode } from "../router/routerUtils";
 import _ from "../../css/recommendations.css";
-import { sanitizedName } from "../common.js";
+import { sanitizedName, getWebpifSupported } from "../common.js";
 
 export default class RecommendationsComponent extends Component {
   futureAddOn(d) {
@@ -11,12 +11,13 @@ export default class RecommendationsComponent extends Component {
     return this;
   }
 
-  update() {
+  async update() {
     const recommendations = this.getState.data;
     this.destroyChildComponents(false, true);
     for (const dat of recommendations) {
+      const $url = await getWebpifSupported(dat.thumb);
       const img = new Component("div", {}, [], {
-        style: { "background-image": `url(${dat.thumb})` },
+        style: { "background-image": `url(${$url})` },
         className: "rec-image"
       });
       const com = new Component(

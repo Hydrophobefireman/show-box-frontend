@@ -21,6 +21,7 @@ export const retry = async (
       new Promise(resolve => setTimeout(() => resolve(), waitTimeInMS)))();
   }
   callOnError(error);
+  throw new Error();
 };
 export const URLBASE = `${window.location.protocol}//${apiHost}`;
 export const localWebsocketURL = a =>
@@ -43,5 +44,28 @@ export const applyExternalCss = async a => {
     );
   } catch (e) {
     console.log("Could not append stylesheet", e);
+  }
+};
+
+export const supportsWebp = async () => {
+  return new Promise((resolve, _) => {
+    const img = new Image();
+    img.onload = () =>
+      resolve(img.naturalHeight === 1 && img.naturalWidth === 1);
+
+    img.onerror = () => resolve(false);
+
+    img.src =
+      "data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=";
+  });
+};
+export const getWebpifSupported = async url => {
+  const s = await supportsWebp();
+  if (s) {
+    const _ = url.split(".");
+    _[_.length - 1] = "webp";
+    return _.join(".");
+  } else {
+    return url;
   }
 };

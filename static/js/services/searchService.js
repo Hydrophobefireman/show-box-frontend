@@ -1,6 +1,6 @@
 import { Requests } from "./httpService.js";
 import { urlencode, loadHash } from "../router/routerUtils.js";
-import { sanitizedName } from "../common.js";
+import { sanitizedName, getWebpifSupported } from "../common.js";
 import Component from "../router/component.js";
 import { TextComponent } from "../router/utils.js";
 
@@ -46,7 +46,7 @@ function handleClick(e) {
     })}`
   );
 }
-export const generateComponents = data => {
+export const generateComponents = async data => {
   const children = [];
   for (const dat of data) {
     const showID = dat.id,
@@ -55,8 +55,9 @@ export const generateComponents = data => {
         id: showID,
         show: sanitizedName(showName)
       })}`,
+      $$url = await getWebpifSupported(dat.thumb),
       img = new Component("div", {}, [], {
-        style: { "background-image": `url(${dat.thumb})` },
+        style: { "background-image": `url(${$$url})` },
         className: "rec-image"
       });
     const wrapComponentChildren = [
@@ -81,7 +82,7 @@ export const generateComponents = data => {
   }
   return children;
 };
-const updateChildrenEQLength = (_resp, childComponents) => {
+const updateChildrenEQLength = async (_resp, childComponents) => {
   childComponents.forEach((child, i) => {
     const resp = _resp[i];
     const img = child.children[0];
@@ -93,10 +94,8 @@ const updateChildrenEQLength = (_resp, childComponents) => {
     const showID = resp.id,
       showName = resp.movie;
     a.setDomAttrs({ style: { display: "" } }, false);
-    img.setDomAttrs(
-      { style: { "background-image": `url(${resp.thumb})` } },
-      false
-    );
+    const $$url = getWebpifSupported(resp.thumb);
+    img.setDomAttrs({ style: { "background-image": `url(${$$url})` } }, false);
     if (prevID === showID) {
       return;
     }
@@ -110,7 +109,11 @@ const updateChildrenEQLength = (_resp, childComponents) => {
   });
 };
 
-export const createResponseComponents = data => {
+export const createResponseComponentsSync = () => {
+  component.destroyChildComponents(false, true);
+  return component;
+};
+export const createResponseComponents = async data => {
   const newLength = (data || []).length;
   component.setDomAttrs({ style: { "pointer-events": "auto" } });
   if (!newLength) {
@@ -124,7 +127,7 @@ export const createResponseComponents = data => {
   } else if (newLength > childLength) {
     const remainingPendingChildren = data.splice(childLength, newLength);
     updateChildrenEQLength(data, component.children);
-    const children = generateComponents(remainingPendingChildren);
+    const children = await generateComponents(remainingPendingChildren);
     for (const x of children) {
       component.addChild(x);
     }
