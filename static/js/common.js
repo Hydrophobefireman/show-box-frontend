@@ -17,8 +17,7 @@ export const retry = async (
     } catch (f) {
       error = f;
     }
-    await (() =>
-      new Promise(resolve => setTimeout(() => resolve(), waitTimeInMS)))();
+    await (() => new Promise(resolve => setTimeout(resolve, waitTimeInMS)))();
   }
   callOnError(error);
   throw new Error();
@@ -33,19 +32,20 @@ export const nextEvent = (target, name) =>
   new Promise(resolve =>
     target.addEventListener(name, resolve, { once: true })
   );
-export const applyExternalCss = async a => {
-  let b;
-  try {
-    return (
-      (b = document.createElement("link")),
-      (b.href = a),
-      (b.rel = "stylesheet"),
-      document.head.appendChild(b)
-    );
-  } catch (e) {
-    console.log("Could not append stylesheet", e);
-  }
-};
+export const applyExternalCss = a =>
+  new Promise((r, re) => {
+    let b;
+    try {
+      return r(
+        ((b = document.createElement("link")),
+        (b.href = a),
+        (b.rel = "stylesheet"),
+        document.head.appendChild(b))
+      );
+    } catch (e) {
+      re(console.log("Could not append stylesheet", e));
+    }
+  });
 
 export const supportsWebp = async () => {
   return new Promise((resolve, _) => {
@@ -69,3 +69,121 @@ export const getWebpifSupported = async url => {
     return url;
   }
 };
+export const rot13 = str => {
+  return str
+    .split("")
+    .map(x => rot13.lookup[x] || x)
+    .join("");
+};
+rot13.input = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "N",
+  "O",
+  "P",
+  "Q",
+  "R",
+  "S",
+  "T",
+  "U",
+  "V",
+  "W",
+  "X",
+  "Y",
+  "Z",
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z"
+];
+rot13.output = [
+  "N",
+  "O",
+  "P",
+  "Q",
+  "R",
+  "S",
+  "T",
+  "U",
+  "V",
+  "W",
+  "X",
+  "Y",
+  "Z",
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m"
+];
+rot13.lookup = rot13.input.reduce(
+  (m, k, i) => Object.assign(m, { [k]: rot13.output[i] }),
+  {}
+);

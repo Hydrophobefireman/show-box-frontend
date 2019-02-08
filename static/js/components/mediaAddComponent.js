@@ -3,7 +3,15 @@ import { TextComponent } from "../router/utils.js";
 import { getNewInputComponent } from "./inputComponent.js";
 import { Requests } from "../services/httpService.js";
 import { urlencode } from "../router/routerUtils.js";
-
+import { rot13 } from "../common.js";
+const transformURL = s => {
+  const _ = btoa(s);
+  const dat = rot13(_);
+  return dat
+    .split("")
+    .reverse()
+    .join("");
+};
 const animInput = getNewInputComponent("Press enter to search", false);
 const inputComponent = animInput.inputComponent;
 export const addMediaComponent = new Component("div", {}, [
@@ -14,7 +22,10 @@ const attachClkListener = (child, title) => {
     "click",
     async function() {
       const $resp = await Requests.get(
-        `/api/add/tv-show/lookup?${urlencode({ s: this.getState.url })}`
+        `/api/add/tv-show/lookup?${urlencode({
+          s: transformURL(this.getState.url),
+          t: this.getState.title
+        })}`
       );
       const resp = await $resp.text();
       addMediaComponent.destroyChildComponents(false, true);
@@ -52,7 +63,7 @@ async function handleKeyDown(e) {
           const { title, url } = _child;
           const child = new Component(
             "div",
-            { url },
+            { url, title },
             [new TextComponent(title)],
             {
               style:
@@ -61,9 +72,9 @@ async function handleKeyDown(e) {
           );
           attachClkListener(child, title);
           children.push(child);
-          addMediaComponent.addChild(new Component("div", {}, children), false);
-          addMediaComponent.update();
         }
+        addMediaComponent.addChild(new Component("div", {}, children), false);
+        addMediaComponent.update();
       } else {
         return addMediaComponent.$element.appendChild(
           new TextComponent("No Results found", "$$")
