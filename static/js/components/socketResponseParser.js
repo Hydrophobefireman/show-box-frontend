@@ -1,7 +1,7 @@
-import { isDev, TextComponent } from "../router/utils.js";
+import { isDev, TextComponent, $ } from "../router/utils.js";
 import { loadHash, urlencode } from "../router/routerUtils.js";
 import Component from "../router/component.js";
-import _ from "../../css/AYTResponses.css";
+
 import { sanitizedName } from "../common.js";
 const parseSocketResponse = responeDict => {
   let response;

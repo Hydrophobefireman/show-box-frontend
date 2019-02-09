@@ -131,11 +131,25 @@ export default class Router {
   }
   registerComponent(route, component, strictMatching) {
     if (!(component instanceof Component)) {
-      throw new Error(
-        "Can not register component please make sure your componentClass extends Component"
-      );
+      if ("function" === typeof component.then) {
+        component.then(mod => {
+          this.routeData[route] = {
+            component: mod.default,
+            strictMatching
+          };
+          this.routeList.push(route);
+        });
+      } else {
+        throw new Error(
+          "Can not register component please make sure your componentClass extends Component"
+        );
+      }
     }
-    this.routeData[route] = { component, strictMatching };
+
+    this.routeData[route] = {
+      component,
+      strictMatching
+    };
     this.routeList.push(route);
   }
   //getters

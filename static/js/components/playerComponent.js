@@ -37,7 +37,7 @@ const episodeSelectorComponent = new Component("div", { currentEp: null }, [], {
   className: "episode-selector"
 });
 
-export const playerComponent = new Component("div", {}, [
+const playerComponent = new Component("div", {}, [
   asYouTypeComponent,
   currentShowNameComponent,
   urlSelectorComponent,
@@ -101,3 +101,4 @@ playerComponent.onAttached = async () => {
   episodeSelectorComponent.setState({ currentEp: 1 });
 };
 iframeSelectorComponent.onDestroy = () => iframeSelectorComponent.clearState();
+export default playerComponent;

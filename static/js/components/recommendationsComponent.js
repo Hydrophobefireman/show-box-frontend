@@ -2,7 +2,6 @@ import Component from "../router/component.js";
 import { Requests } from "../services/httpService.js";
 import { TextComponent } from "../router/utils.js";
 import { loadHash, urlencode } from "../router/routerUtils";
-import _ from "../../css/recommendations.css";
 import { sanitizedName, getWebpifSupported } from "../common.js";
 
 export default class RecommendationsComponent extends Component {

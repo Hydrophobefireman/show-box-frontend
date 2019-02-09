@@ -14,7 +14,7 @@ const buttonComponent =
 const responseComponent = createResponseComponentsSync();
 const loadingComponent = new TextComponent("Searching");
 
-export const searchResultsComponent = new Component("div", {}, [
+const searchResultsComponent = new Component("div", {}, [
   asYouTypeComponent,
   loadingComponent,
   responseComponent
@@ -81,3 +81,4 @@ searchResultsComponent.onAttached = wasRendered => {
     true
   );
 };
+export default searchResultsComponent

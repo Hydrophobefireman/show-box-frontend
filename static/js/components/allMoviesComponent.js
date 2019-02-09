@@ -11,7 +11,7 @@ import {
 } from "./index.js";
 
 const resComponent = new Component("div", {}, [], { className: "rec-box" });
-export const allComponent = new Component(
+const allComponent = new Component(
   "div",
   {},
   [asYouTypeComponent, resComponent],
@@ -44,3 +44,4 @@ allComponent.onAttached = async () => {
   });
   resComponent.update();
 };
+export default allComponent;
