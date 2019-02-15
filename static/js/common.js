@@ -47,8 +47,8 @@ export const applyExternalCss = a =>
     }
   });
 
-export const supportsWebp = async () => {
-  return new Promise((resolve, _) => {
+export const supportsWebp = () =>
+  new Promise((resolve, _) => {
     const img = new Image();
     img.onload = () =>
       resolve(img.naturalHeight === 1 && img.naturalWidth === 1);
@@ -58,7 +58,6 @@ export const supportsWebp = async () => {
     img.src =
       "data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=";
   });
-};
 export const getWebpifSupported = async url => {
   const s = await supportsWebp();
   if (s) {
