@@ -93,22 +93,22 @@ const updateChildrenEQLength = (_resp, childComponents) => {
     const textComponent = TextComponent.find(prevID, span.$element)[0];
     const showID = resp.id,
       showName = resp.movie;
-    a.setDomAttrs({ style: { display: "" } }, false);
+    a.setDomAttrs({ style: { display: "" } }, true);
     getWebpifSupported(resp.thumb).then($$url => {
       img.setDomAttrs(
         { style: { "background-image": `url(${$$url})` } },
         false
       );
-      img.updateDOMAttrs();
     });
     if (prevID === showID) {
       return;
     }
     const url = `/watch?${urlencode({ id: showID, show: showName })}`;
-    a.setDomAttrs({ href: `#${url}` }, false);
+    a.setDomAttrs({ href: `#${url}` }, true);
     a.setState({ id: showID, showName }, false);
     textComponent.data = showName;
     textComponent.tag = showID;
+
     // debugger;
     // child.update();
   });
