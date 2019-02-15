@@ -82,8 +82,8 @@ export const generateComponents = async data => {
   }
   return children;
 };
-const updateChildrenEQLength = async (_resp, childComponents) => {
-  childComponents.forEach((child, i) => {
+const updateChildrenEQLength = (_resp, childComponents) => {
+  childComponents.forEach(async (child, i) => {
     const resp = _resp[i];
     const img = child.children[0];
     const a = child;
@@ -94,7 +94,7 @@ const updateChildrenEQLength = async (_resp, childComponents) => {
     const showID = resp.id,
       showName = resp.movie;
     a.setDomAttrs({ style: { display: "" } }, false);
-    const $$url = getWebpifSupported(resp.thumb);
+    const $$url = await getWebpifSupported(resp.thumb);
     img.setDomAttrs({ style: { "background-image": `url(${$$url})` } }, false);
     if (prevID === showID) {
       return;
