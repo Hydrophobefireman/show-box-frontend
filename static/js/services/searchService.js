@@ -87,7 +87,6 @@ const updateChildrenEQLength = (_resp, childComponents) => {
     const resp = _resp[i];
     const img = child.children[0];
     const a = child;
-    console.log(a);
     const prevID = child.getState.id;
     const span = child.children[1];
     span.setDomAttrs({ style: { display: "" } }, false);
@@ -96,7 +95,6 @@ const updateChildrenEQLength = (_resp, childComponents) => {
       showName = resp.movie;
     a.setDomAttrs({ style: { display: "" } }, false);
     getWebpifSupported(resp.thumb).then($$url => {
-      console.log($$url);
       img.setDomAttrs(
         { style: { "background-image": `url(${$$url})` } },
         false

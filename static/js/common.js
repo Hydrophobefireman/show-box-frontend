@@ -186,3 +186,11 @@ rot13.lookup = rot13.input.reduce(
   (m, k, i) => Object.assign(m, { [k]: rot13.output[i] }),
   {}
 );
+export const delve = (_obj, key) => {
+  let obj = _obj;
+  const p = key.split(".");
+  for (let i = 0; i < p.length && obj; i++) {
+    obj = obj[p[i]];
+  }
+  return obj;
+};

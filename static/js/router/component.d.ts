@@ -1,4 +1,4 @@
-import { ComponentInterface, TextComponent } from "./utils";
+﻿import { ComponentInterface } from "./utils";
 declare class BaseComponent {
     constructor();
     /**
@@ -61,5 +61,18 @@ export default class Component extends BaseComponent {
     clearState(shouldUpdate?: boolean): this;
     setState(prop: any, shouldUpdate?: boolean, wasInvokedThroughBinding?: boolean): this;
     constructor(name: string, props?: any, children?: any[], domAttrs?: {}, events?: {});
+}
+export declare class TextComponent extends Text {
+    tag: string;
+    isMountedTo: HTMLElement;
+    toHTMLString(): string;
+    static find(tag: string, on: Element | HTMLElement): Array<any>;
+    private _condition;
+    textCondition: () => string;
+    update(): void;
+    render(on: HTMLElement, append?: boolean): this;
+    shouldRender(): boolean;
+    destroyComponent(): void;
+    constructor(text: string, tag?: string);
 }
 export {};

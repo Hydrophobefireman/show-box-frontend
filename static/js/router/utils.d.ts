@@ -1,7 +1,7 @@
-import Component from "./component";
-export declare const asyncNoop: () => Promise<any>;
+﻿export declare const asyncNoop: () => Promise<any>;
 export declare const isDev: boolean;
 export declare const isKeyValObj: (a: any) => boolean;
+export { TextComponent } from "./component";
 export declare const isSameDay: (c: Date, d: Date) => boolean;
 export declare const getClassAsArray: (cls: string | string[]) => string[];
 export declare const noop: () => any;
@@ -21,7 +21,7 @@ export declare const getObjectFromCss: (css: string | object) => any;
 export interface ComponentInterface {
     element: string;
     props?: {};
-    children?: Array<Component | TextComponent>;
+    children?: Array<import("./component").default | import("./component").TextComponent>;
     events?: any;
 }
 export interface RouteInterface {
@@ -31,18 +31,5 @@ export interface RouteInterface {
 }
 export declare const selfClosingTags: string[];
 export declare const _ComponentAsString: (componentProps: ComponentInterface) => string;
-export declare class TextComponent extends Text {
-    tag: string;
-    isMountedTo: HTMLElement;
-    toHTMLString(): string;
-    static find(tag: string, on: Element | HTMLElement): Array<any>;
-    private _condition;
-    textCondition: () => string;
-    update(): void;
-    render(on: HTMLElement, append?: boolean): this;
-    shouldRender(): boolean;
-    destroyComponent(): void;
-    constructor(text: string, tag?: string);
-}
 export declare function safeDefine(name: string, cls: Function): void;
 export declare const getLargerArray: (a1: any[], a2: any[]) => any[][];

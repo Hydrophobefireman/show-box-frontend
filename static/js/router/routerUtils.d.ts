@@ -1,4 +1,4 @@
-export declare const urlencode: (a: any) => string | URLSearchParams;
+﻿export declare const urlencode: (a: any) => string | URLSearchParams;
 export declare const __random__: (a?: number) => string;
 export declare const getRandom: (a?: number) => string;
 export declare const loadHash: (hash: string) => void;
