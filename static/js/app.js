@@ -6,10 +6,14 @@ import _2 from "../css/AYTResponses.css";
 import { $ } from "./router/utils.js";
 import { Requests } from "./services/httpService.js";
 import { retry, applyExternalCss, delve } from "./common.js";
+import MatSpinner from "./spinner-element.js";
+customElements.define("mat-spinner", MatSpinner);
 window.oldTitle = document.title;
 const appRoot = $.id("app-root");
 const router = new Router(appRoot);
-appRoot.innerHTML = "Connecting to server";
+appRoot.innerHTML =
+  "Connecting to the server<br><mat-spinner svgstyle='width:150px;height:150px;margin-top:50px'></mat-spinner>";
+
 retry(
   () => Requests.get("/collect/"),
   3,
@@ -40,8 +44,6 @@ retry(
   const currRoute = router.currentRoute;
   const reqComponent = obj[currRoute];
   const md = await reqComponent();
-  console.log("registering:", md.default, " first");
-  console.log([...document.head.children].map(x => x.src));
   router.registerComponent(currRoute, md.default);
   delete obj[currRoute];
   for (const [k, v] of Object.entries(obj)) {
