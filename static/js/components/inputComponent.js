@@ -34,9 +34,6 @@ class _InputComponent extends Component {
   }
   handleBlur() {
     this.setState({ isFocused: false });
-    try {
-      getResponseComponent();
-    } catch (e) {}
   }
 
   constructor(socket) {
