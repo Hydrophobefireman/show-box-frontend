@@ -23,16 +23,17 @@ export default function PreferenceComponent({
         "Dark Mode is ",
         preferences.darkMode ? "On" : "Off"
       ),
-      canZoom &&
-        h(
-          "button",
-          {
-            class: "toggle-option",
-            onClick: () => setPreferences("zoom", !preferences.zoom)
-          },
-          "Zoom is ",
-          preferences.zoom ? "Enabled" : "Disabled"
-        )
+      canZoom
+        ? h(
+            "button",
+            {
+              class: "toggle-option",
+              onClick: () => setPreferences("zoom", !preferences.zoom)
+            },
+            "Zoom is ",
+            preferences.zoom ? "Enabled" : "Disabled"
+          )
+        : null
     )
   );
 }
