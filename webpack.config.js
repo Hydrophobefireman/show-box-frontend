@@ -29,7 +29,8 @@ module.exports = {
             ],
             plugins: [
               "@babel/plugin-transform-runtime",
-              "@babel/plugin-syntax-dynamic-import"
+              "@babel/plugin-syntax-dynamic-import",
+              "@babel/plugin-proposal-class-properties"
             ]
           }
         }
@@ -53,7 +54,7 @@ module.exports = {
       }
     ]
   },
-  entry: `${__dirname}/static/js/app.js`,
+  entry: `${__dirname}/static/js/App.js`,
   output: { path: `${__dirname}/docs`, filename: "[name]-[contenthash].js" },
   mode,
   optimization: {
@@ -66,6 +67,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: `${__dirname}/index.html`,
       xhtml: !0,
+      inject: false,
       favicon: "./favicon.ico",
       minify: devOrProd(
         {
@@ -84,6 +86,9 @@ module.exports = {
       filename: "[name]-[hash].css",
       chunkFilename: "[id]-[hash].css"
     }),
-    new StyleExtHtmlWebpackPlugin({ minify: devOrProd(!0, !1) })
+    new StyleExtHtmlWebpackPlugin({
+      minify: devOrProd(!0, !1),
+      position: "head-bottom"
+    })
   ]
 };

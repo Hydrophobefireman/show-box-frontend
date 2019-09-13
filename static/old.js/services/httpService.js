@@ -1,13 +1,13 @@
 import { URLBASE } from "../common.js";
-export const Requests = {
-  async get(url, isSameOrigin = true, headers = {}) {
+export class Requests {
+  static async get(url, isSameOrigin = true, headers = {}) {
     let finalURL;
     return (
       (finalURL = isSameOrigin ? `${URLBASE}${url}` : url),
       await fetch(finalURL, { headers, credentials: "include" })
     );
-  },
-  async post(
+  }
+  static async post(
     url,
     isSameOrigin = !0,
     requestData,
@@ -33,7 +33,7 @@ export const Requests = {
       })
     );
   }
-};
+}
 
 let integrity;
 export const getIntegrity = async () => {

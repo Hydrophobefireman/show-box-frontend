@@ -1,26 +1,32 @@
+import { loadURL } from "./@ui/ui-lib.js";
+export const defaultTitle = "Watch Shows on Show-Box";
+export {
+  default as assign
+} from "@hydrophobefireman/j-utils/src/modules/Object/assign.js";
 const apiHost = window.location.host.includes("localhost")
   ? "localhost:5000"
   : "show-box.herokuapp.com";
 export const preventDefault = e => e.preventDefault();
-export const sanitizedName = s =>
-  s.replace(/([^\w]|_)/g, "-").replace(/--/g, "-");
-export const retry = async (
-  func,
-  retryCount,
-  callOnError,
-  waitTimeInMS = 100
-) => {
+export const sanitizedName = s => {
+  try {
+    return s.replace(/([^\w]|_)/g, "-").replace(/--/g, "-");
+  } catch (e) {
+    console.log(s);
+  }
+};
+export const retry = async (func, retryCount, waitTimeInMS = 100) => {
   let error;
-  for (let tryCount = 0; tryCount < retryCount; tryCount++) {
+  let tryCount = 0;
+  while (tryCount < retryCount) {
     try {
       return await func();
     } catch (f) {
       error = f;
     }
-    await (() => new Promise(resolve => setTimeout(resolve, waitTimeInMS)))();
+    await new Promise(resolve => setTimeout(resolve, waitTimeInMS));
+    tryCount++;
   }
-  callOnError(error);
-  throw new Error();
+  throw error;
 };
 export const URLBASE = `${window.location.protocol}//${apiHost}`;
 export const localWebsocketURL = a =>
@@ -32,33 +38,24 @@ export const nextEvent = (target, name) =>
   new Promise(resolve =>
     target.addEventListener(name, resolve, { once: true })
   );
-export const applyExternalCss = a =>
-  new Promise((r, re) => {
-    let b;
-    try {
-      return r(
-        ((b = document.createElement("link")),
-        (b.href = a),
-        (b.rel = "stylesheet"),
-        document.head.appendChild(b))
-      );
-    } catch (e) {
-      re(console.log("Could not append stylesheet", e));
-    }
-  });
-
+let _supportsWebp = null;
 export const supportsWebp = () =>
   new Promise((resolve, _) => {
+    if (typeof _supportsWebp === "boolean") return resolve(_supportsWebp);
     const img = new Image();
-    img.onload = () =>
-      resolve(img.naturalHeight === 1 && img.naturalWidth === 1);
-
+    img.onload = () => {
+      const ret = img.naturalHeight === 1 && img.naturalWidth === 1;
+      _supportsWebp = ret;
+      resolve(ret);
+    };
     img.onerror = () => resolve(false);
 
     img.src =
       "data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=";
   });
+
 export const getWebpifSupported = async url => {
+  if (!url) return url;
   const s = await supportsWebp();
   if (s) {
     const _ = url.split(".");
@@ -68,129 +65,36 @@ export const getWebpifSupported = async url => {
     return url;
   }
 };
-export const rot13 = str => {
-  return str
-    .split("")
-    .map(x => rot13.lookup[x] || x)
-    .join("");
+
+const textArr = document.createElement("textarea");
+export const decodeHTML = html => {
+  if (!html) return "";
+  textArr.innerHTML = html;
+  return textArr.value;
 };
-rot13.input = [
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z",
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-  "g",
-  "h",
-  "i",
-  "j",
-  "k",
-  "l",
-  "m",
-  "n",
-  "o",
-  "p",
-  "q",
-  "r",
-  "s",
-  "t",
-  "u",
-  "v",
-  "w",
-  "x",
-  "y",
-  "z"
-];
-rot13.output = [
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z",
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "n",
-  "o",
-  "p",
-  "q",
-  "r",
-  "s",
-  "t",
-  "u",
-  "v",
-  "w",
-  "x",
-  "y",
-  "z",
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-  "g",
-  "h",
-  "i",
-  "j",
-  "k",
-  "l",
-  "m"
-];
-rot13.lookup = rot13.input.reduce(
-  (m, k, i) => Object.assign(m, { [k]: rot13.output[i] }),
-  {}
-);
-export const delve = (_obj, key) => {
-  let obj = _obj;
-  const p = key.split(".");
-  for (let i = 0; i < p.length && obj; i++) {
-    obj = obj[p[i]];
+export const defer = fn => Promise.resolve().then(fn);
+
+export const urlencode = a => {
+  if (window.URLSearchParams) {
+    return new URLSearchParams(a).toString();
+  } else {
+    return `${Object.keys(a)
+      .map(b => `${encodeURIComponent(b)}=${encodeURIComponent(a[b])}`)
+      .join("&")}`;
   }
-  return obj;
 };
+export function loadSearchResults(q) {
+  loadURL(`/search?${urlencode({ q })}`);
+}
+
+export function getWatchURL(id, movie) {
+  return `/watch?${urlencode({ id, movie: sanitizedName(movie) })}`;
+}
+
+export function resize(url) {
+  if (!url) return url;
+  const b = url.split("/upload/");
+  b[1] = b[1].split("/");
+  b[1] = "w_150,h_200/" + b[1][1];
+  return b.join("/upload/");
+}

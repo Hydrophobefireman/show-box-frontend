@@ -1,0 +1,11 @@
+.reload-connection {
+  display: block;
+  margin: auto;
+  background: #fafafa;
+  outline: none;
+  border: 2px solid var(--primary-color);
+  border-radius: 20px;
+  padding: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+}

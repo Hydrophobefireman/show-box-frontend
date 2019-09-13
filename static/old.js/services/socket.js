@@ -11,14 +11,14 @@ class SocketConn {
    *
    * @param {string} _ws_
    */
-  startConn(_ws_) {
-    if (this.socket && this.socket.readyState === WebSocket.OPEN)
-      return this.socket;
+  startConn(_ws_, startPings = true) {
     return new Promise((resolve, reject) => {
       this.socket = new WebSocket(localWebsocketURL(_ws_));
       this.socket.onopen = () => {
         this.socket.onmessage = this.__defaultOnMessage;
-
+        if (startPings) {
+          this._pingPongs();
+        }
         resolve(this.socket);
       };
       this.socket.onerror = e => reject(e);
@@ -41,14 +41,12 @@ class SocketConn {
    * @param {(MessageEvent) => void} func
    */
   set onmessage(func) {
-    if (func === this._onmessage) return;
-    this._onmessage = func;
     this.socket.onmessage = e => {
       const _data = JSON.parse(e.data || "{}");
       if (_data.type === "ping" || _data.type === "pong") {
         return;
       } else {
-        return this._onmessage(_data);
+        return func(_data);
       }
     };
   }
@@ -72,6 +70,17 @@ class SocketConn {
       this.socket.readyState
     );
   }
+  _pingPongs() {
+    this.pingtimer = setTimeout(() => {
+      if (this.socket.readyState === this.socket.OPEN) {
+        this.send({ type: "ping" });
+        this._pingPongs();
+      } else {
+        clearTimeout(this.pingtimer);
+      }
+    }, 20000);
+  }
+  constructor() {}
 }
 let socketConnection;
 /**

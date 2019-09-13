@@ -1,36 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Watch TV Shows on Show-Box</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <title>watch tv shows for free on show box</title>
+    <meta name="description" content="pycode.tk" />
+    <link
+      rel="preload"
+      href="https://fonts.pycode.tk/open-sans.css"
+      as="style"
+    />
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <% for (const val of Object.values(htmlWebpackPlugin.files.chunks)) { %>
+    <link href="<%= val.entry %>" rel="preload" as="script" />
+    <% } %> <% for (const val of Object.values(htmlWebpackPlugin.files.chunks))
+    { %> <% if(!val.entry.includes("vendors")){ %>
+    <script defer src="<%= val.entry %>"></script>
+    <% } else{ %>
+    <script src="<%= val.entry %>"></script>
+    <% } %> <% } %>
   </head>
   <body>
-    <div class="header">
-      <div
-        router-header
-        _routerEvt="onclick"
-        _routerAct="if($event.ctrlKey){return};$event.stopPropagation();this.load('/')"
-        class="banner-button"
-        _routerif="this.currentRoute!=='/'"
-      >
-        <a class="router-link" href="#/">Home Page</a>
-      </div>
-      <div
-        router-header
-        class="banner-button"
-        _routerEvt="onclick"
-        _routerAct="if($event.ctrlKey){return};$event.stopPropagation();this.load('/all')"
-        _routerif="this.currentRoute!=='/all/'"
-      >
-        <a class="router-link" href="#/all">All Shows</a>
-      </div>
-    </div>
-    <div class="center">
-      <div>
-        <div id="app-root"></div>
-      </div>
-    </div>
+    <div id="app-root" style="display: none"></div>
+    <noscript>This Application uses JavaScript..</noscript>
   </body>
 </html>

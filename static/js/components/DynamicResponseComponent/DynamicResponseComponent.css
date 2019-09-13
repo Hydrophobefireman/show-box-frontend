@@ -1,0 +1,31 @@
+.response-parent {
+  margin: auto;
+  text-align: center;
+  overflow: hidden;
+  width: 60%;
+}
+.response-parent.has-data {
+  border: 2px solid var(--border-shadow-color);
+  border-radius: 20px;
+  padding: 4px;
+}
+.query-response {
+  border-radius: 10px;
+  padding: 1px;
+  padding-left: 3px;
+  text-align: left;
+  margin-left: 10px;
+  transition: 0.2s ease-in-out;
+  outline: none;
+}
+.query-response:active,
+.query-response:hover,
+.query-response:focus {
+  font-weight: bold;
+  background-color: var(--border-shadow-color);
+}
+.movie-link {
+  display: block;
+  color: var(--text-color);
+  text-decoration: none;
+}

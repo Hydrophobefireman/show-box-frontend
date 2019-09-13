@@ -1,0 +1,59 @@
+header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 20;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 8px;
+  overflow: hidden;
+  background: var(--primary-color);
+  text-align: center;
+  color: var(--header-text-color);
+}
+.mask {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  background-color: #ced7dc6e;
+}
+#preference-component {
+  height: fit-content;
+  padding: 20px;
+  position: fixed;
+  text-align: center;
+  margin: auto;
+  border: 2px solid var(--border-shadow-color);
+  left: 0;
+  right: 0;
+  background: var(--background-color);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  animation: showToggle 0.2s linear;
+  animation-fill-mode: forwards;
+  width: 90%;
+}
+.toggle-option {
+  width: 90%;
+  outline: none;
+  height: 30px;
+  background: var(--background-color);
+  border: 2px solid var(--border-shadow-color);
+  border-radius: 10px;
+  cursor: pointer;
+  color: var(--text-color);
+  font-size: 14px;
+  font-weight: bold;
+}
+@keyframes showToggle {
+  from {
+    bottom: -10%;
+  }
+
+  to {
+    bottom: 0;
+  }
+}
