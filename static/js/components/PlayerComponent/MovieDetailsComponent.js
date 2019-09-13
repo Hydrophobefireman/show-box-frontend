@@ -16,7 +16,7 @@ export class MovieDetailsComponent extends Component {
       return h(
         "div",
         { "data-fetch": JSON.stringify(this.props) },
-        "Loading Movie Data",
+        "Loading TV Data",
         h("div", null, h(LoadingSpinner))
       );
     } else {

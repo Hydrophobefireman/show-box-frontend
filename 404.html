@@ -1,13 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Show-box - Unlimited TV Shows</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="Watch TV Shows for Free" name="og:title" />
+    <meta
+      content="Watch Unlimited TV Shows For Free on show-box!"
+      name="description"
+    />
+    <meta content="show-box" name="og:site_name" />
+    <meta
+      content="Watch Unlimited TV Shows For Free on show-box!"
+      name="og:description"
+    />
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta content="#1976d2" name="theme-color" />
+    <title>TV Shows</title>
   </head>
 
   <body>
     <script>
-      const hash = window.location.pathname + window.location.search;
-      location.href = "/#" + hash;
+      window.location.href = `/?__loader=${encodeURIComponent(
+        window.location.pathname + window.location.search
+      )}`;
     </script>
     <noscript
       >Please enable JavaScript to continue using this application.</noscript

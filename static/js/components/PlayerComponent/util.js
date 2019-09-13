@@ -40,7 +40,7 @@ const makeRequest = async id => {
     episode_meta: ret.episode_meta
   };
 };
-export const txtComponent = h("div", null, "No movie exists with the given ID");
+export const txtComponent = h("div", null, "No show exists with the given ID");
 export const getMovieDetails = async id => {
   const c = cache.get(id);
   if (c) {
