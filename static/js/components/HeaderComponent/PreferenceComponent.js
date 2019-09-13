@@ -1,5 +1,5 @@
 import { h, Fragment } from "../../@ui/ui-lib";
-
+const canZoom = "ontouchstart" in window || navigator.maxTouchPoints;
 export default function PreferenceComponent({
   preferences,
   setPreferences,
@@ -13,20 +13,26 @@ export default function PreferenceComponent({
     h(
       "div",
       applyProp({ id: "preference-component" }, showMenu),
+      h("div", null, "Preferences"),
       h(
-        Fragment,
-        null,
-        h("div", null, "Preferences"),
+        "button",
+        {
+          class: "toggle-option",
+          onClick: () => setPreferences("darkMode", !preferences.darkMode)
+        },
+        "Dark Mode is ",
+        preferences.darkMode ? "On" : "Off"
+      ),
+      canZoom &&
         h(
           "button",
           {
             class: "toggle-option",
-            onClick: () => setPreferences("darkMode", !preferences.darkMode)
+            onClick: () => setPreferences("zoom", !preferences.zoom)
           },
-          "Dark Mode is ",
-          preferences.darkMode ? "On" : "Off"
+          "Zoom is ",
+          preferences.zoom ? "Enabled" : "Disabled"
         )
-      )
     )
   );
 }

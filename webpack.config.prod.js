@@ -23,6 +23,7 @@ module.exports = {
               [
                 "@babel/preset-env",
                 {
+                  "corejs": "3.2.1",
                   useBuiltIns: "usage",
                   targets: ">0.5%,not ie 11,not op_mini all"
                 }
