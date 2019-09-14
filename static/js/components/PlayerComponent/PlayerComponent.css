@@ -4,6 +4,7 @@
   padding: 6px;
   margin: 3px;
   cursor: pointer;
+  color: var(--text-color);
 }
 .frame-src {
   border: 2px solid var(--border-shadow-color);
