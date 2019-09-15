@@ -57,3 +57,65 @@ header {
     bottom: 0;
   }
 }
+
+.modal-ui-selector {
+  border: 2px solid var(--border-shadow-color);
+  transition: 0.2s ease-in-out;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  left: 0;
+  right: 0;
+  background: var(--background-color);
+  width: fit-content;
+  padding: 20px;
+  height: fit-content;
+  border-radius: 10px;
+  animation: animOpen 0.2s linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes animOpen {
+  from {
+    transform: scale(0.1);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.expirement-opts {
+  border: 2px solid var(--border-shadow-color);
+  text-align: left;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.info-text {
+  font-size: 12px;
+  font-weight: lighter;
+}
+.current-exp {
+  font-size: 13px;
+  font-weight: lighter;
+}
+.data-value {
+  font-weight: bold;
+}
+
+.c-edit {
+  text-align: center;
+}
+._done {
+  border-radius: 20px;
+  padding: 5px;
+  width: 30%;
+  margin-top: 15px;
+  border: 2px solid var(--border-shadow-color);
+  background: var(--primary-color);
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+}

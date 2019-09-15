@@ -102,6 +102,5 @@ function updateZoomPreference(state) {
   const zoom = state.preferences.zoom;
   const meta = document.querySelector("meta[name='viewport']");
   const content = "width=device-width,initial-scale=1";
-  console.log(zoom);
   meta.setAttribute("content", zoom ? content : content + ",user-scalable=no");
 }

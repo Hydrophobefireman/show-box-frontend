@@ -1,8 +1,9 @@
 const minifier = require("terser-webpack-plugin"),
   HtmlWebpackPlugin = require("html-webpack-plugin"),
   MiniCssExtractPlugin = require("mini-css-extract-plugin"),
+  autoPrefixPlugin = require("autoprefixer"),
+  configJS = require("./uiconfig.js"),
   StyleExtHtmlWebpackPlugin = require("style-ext-html-webpack-plugin");
-const autoPrefixPlugin = require("autoprefixer");
 const mode = "development";
 // const mode = "production";
 const devOrProd = (a, b) => {
@@ -23,7 +24,7 @@ module.exports = {
               [
                 "@babel/preset-env",
                 {
-                  "corejs": "3.2.1",
+                  corejs: "3.2.1",
                   useBuiltIns: "usage",
                   targets: ">0.5%,not ie 11,not op_mini all"
                 }
@@ -67,10 +68,11 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
+      inject: false,
       template: `${__dirname}/index.html`,
       xhtml: !0,
-      inject: false,
       favicon: "./favicon.ico",
+      uiConfig: configJS,
       minify: devOrProd(
         {
           collapseBooleanAttributes: !0,
@@ -83,7 +85,6 @@ module.exports = {
         !1
       )
     }),
-
     new MiniCssExtractPlugin({
       filename: "[name]-[hash].css",
       chunkFilename: "[id]-[hash].css"

@@ -1,4 +1,5 @@
 import { h, Fragment } from "../../@ui/ui-lib";
+import UIExperiments from "./UIExperiments.js";
 const canZoom = "ontouchstart" in window || navigator.maxTouchPoints;
 export default function PreferenceComponent({
   preferences,
@@ -33,7 +34,8 @@ export default function PreferenceComponent({
             "Zoom is ",
             preferences.zoom ? "Enabled" : "Disabled"
           )
-        : null
+        : null,
+      h(UIExperiments)
     )
   );
 }

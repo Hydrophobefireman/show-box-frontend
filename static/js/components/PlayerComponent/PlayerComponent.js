@@ -14,10 +14,11 @@ export default class PlayerComponent extends Component {
     return new URLSearchParams(Router.getQs).get("id");
   }
   getChildren({}, { badId }) {
-    if (badId) {
+    const mid = this.movieId;
+    if (badId || !mid) {
       return txtComponent;
     }
-    return h(MovieDetailsComponent, { id: this.movieId });
+    return h(MovieDetailsComponent, { id: mid });
   }
   render(props, state) {
     return h(
