@@ -1,7 +1,7 @@
 import { Requests } from "../../services/httpService.js";
 import { createElement as h } from "../../@ui/ui-lib.js";
 // import { compatMap, compatMapGet, compatMapSet } from "../../common.js";
-import _Map from "@hydrophobefireman/j-utils/src/modules/es6/loose/Map/index.js";
+import _Map from "@hydrophobefireman/j-utils/@build-modern/src/modules/es6/loose/Map/index.js";
 export const defaultHTML =
   "data:text/html;base64,PGh0bWw+PGhlYWQ+PC9oZWFkPjxib2R5IHN0eWxlPSJtYXJnaW46YXV0bztjb2xvcjogI2ZmZjt0ZXh0LWFsaWduOmNlbnRlcjtmb250LWZhbWlseTpzYW5zLXNlcmlmO2ZvbnQtd2VpZ2h0OmJvbGQ7YmFja2dyb3VuZC1jb2xvcjogIzAwMDsiPkxvYWRpbmcuLi48L2JvZHk+PC9odG1sPg==";
 export const cache = new _Map();

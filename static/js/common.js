@@ -2,7 +2,7 @@ import { loadURL } from "./@ui/ui-lib.js";
 export const defaultTitle = "Watch Shows on Show-Box";
 export {
   default as assign
-} from "@hydrophobefireman/j-utils/src/modules/Object/assign.js";
+} from "@hydrophobefireman/j-utils/@build-modern/src/modules/Object/assign.js";
 const apiHost = window.location.host.includes("localhost")
   ? "localhost:5000"
   : "show-box.herokuapp.com";

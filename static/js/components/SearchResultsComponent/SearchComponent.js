@@ -2,7 +2,7 @@ import Component, { createElement as h } from "../../@ui/ui-lib.js";
 import { Requests } from "../../services/httpService.js";
 import { urlencode } from "../../common.js";
 import { ResultComponent } from "../RecommendationsComponent/RecommendationsComponent.js";
-import FakeMap from "@hydrophobefireman/j-utils/src/modules/es6/loose/Map/index.js";
+import FakeMap from "@hydrophobefireman/j-utils/@build-modern/src/modules/es6/loose/Map/index.js";
 const cache = new FakeMap();
 const makeRequest = async q => {
   const _data = await Requests.post(
