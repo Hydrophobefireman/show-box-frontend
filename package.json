@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.6.0",
-    "@hydrophobefireman/j-utils": "^1.1.5",
+    "@hydrophobefireman/j-utils": "^2.0.0",
     "npm-check-updates": "^3.1.23"
   },
   "scripts": {

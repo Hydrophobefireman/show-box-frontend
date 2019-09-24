@@ -1,3 +1,4 @@
+import keys from "@hydrophobefireman/j-utils/@build-modern/src/modules/Object/keys.js";
 import Component, {
   createElement as h,
   A,
@@ -7,6 +8,7 @@ import Component, {
 } from "../../@ui/ui-lib.js";
 import "./HeaderComponent.css";
 import PreferenceComponent from "./PreferenceComponent.js";
+const MQ_DARK = "(prefers-color-scheme: dark)";
 export class HeaderComponent extends Component {
   state = {
     currentUrl: Router.getPath,
@@ -19,13 +21,16 @@ export class HeaderComponent extends Component {
   }
   componentDidMount() {
     const prefs = JSON.parse(localStorage.getItem("prefs") || "{}");
-    this.setState(() => {
-      const c = {};
-      for (const i of Object.keys(prefs)) {
-        c[i] = prefs[i];
-      }
-      return { preferences: c };
-    });
+    let q;
+    if (window.matchMedia && (q = window.matchMedia(MQ_DARK))) {
+      prefs.darkMode = q.matches;
+      q.addEventListener("change", e => this.setPreferences("dark", e.matches));
+    }
+    const c = {};
+    for (const i of keys(prefs)) {
+      c[i] = prefs[i];
+    }
+    this.setState({ preferences: c });
   }
   componentDidUpdate() {
     const state = this.state;
