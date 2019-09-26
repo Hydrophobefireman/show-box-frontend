@@ -31,8 +31,8 @@ export class WebSocketResponseComponent extends Component {
     socket.onmessage = this.onMessage;
     socket.sendString(v);
   }
-  componentWillUpdate = debounce(this.fetchResponses, 250, false, this);
-  componentWillMount = debounce(this.fetchResponses, 250, false, this);
+  componentWillUpdate = debounce(this.fetchResponses, 50, false, this);
+  componentWillMount = debounce(this.fetchResponses, 50, false, this);
   render() {
     const cls = ["response-parent"];
     if (this.state.resp.length) cls.push("has-data");
