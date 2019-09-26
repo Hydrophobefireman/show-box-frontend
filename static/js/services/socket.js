@@ -12,7 +12,10 @@ class SocketConn {
    * @param {string} _ws_
    */
   startConn(_ws_) {
-    if (this.socket && this.socket.readyState === WebSocket.OPEN)
+    if (
+      this.socket &&
+      [WebSocket.OPEN, WebSocket.CONNECTING].includes(this.socket.readyState)
+    )
       return this.socket;
     return new Promise((resolve, reject) => {
       this.socket = new WebSocket(localWebsocketURL(_ws_));
