@@ -98,3 +98,18 @@ export function resize(url) {
   b[1] = "w_150,h_200/" + b[1][1];
   return b.join("/upload/");
 }
+export function debounce(func, wait, immediate, $this) {
+  let timeout;
+  return function() {
+    const context = $this,
+      args = arguments;
+    const later = () => {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    const callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+}
