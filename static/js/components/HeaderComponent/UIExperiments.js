@@ -8,9 +8,8 @@ function normalize(obj) {
   });
   return r;
 }
-const experimentsJSON = JSON.parse(
-  document.getElementById("ui-experiments").textContent
-);
+const experimentsJSON = window.__uiExperiments;
+
 export default class UIExperiments extends Component {
   state = {
     experiments: normalize(experimentsJSON.experiments),

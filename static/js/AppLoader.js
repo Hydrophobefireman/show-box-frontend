@@ -14,6 +14,7 @@ import { ErrorComponent } from "./components/ErrorComponent/ErrorComponent.js";
 function NotFoundComponent() {
   return h("div", null, "The Requested URL was not found");
 }
+const shouldPrefetch = (window.__appConfig ||{}).SHOULD_PREFETCH_MODULES
 
 const getDefault = resolvedModule => resolvedModule.default;
 /**
@@ -62,7 +63,7 @@ export class AppLoader extends Component {
   }
   _onMount = () => {
     if (!this.state.hasPrefetchedComponents) {
-      this._prefetchComponents();
+    if(shouldPrefetch)  this._prefetchComponents();
       this.setState({ hasPrefetchedComponents: true });
     }
     return Requests.get("/collect/");

@@ -8,9 +8,12 @@
     <link rel="preconnect" href="https://fonts.pycode.tk/" />
     <link rel="preconnect" href="https://res.cloudinary.com/" />
     <link rel="preconnect" href="https://show-box.herokuapp.com/" />
-    <script type="application/json" id="ui-experiments">
-      <%= JSON.stringify(htmlWebpackPlugin.options.uiConfig) %>
-    </script>
+
+<script>
+<% for (const {id,config} of htmlWebpackPlugin.options.configs) { %> window["<%= id %>"]=JSON.parse(<%= JSON.stringify(JSON.stringify(config)) %>);<% } %> 
+
+</script>
+
     <link
       rel="preload"
       href="https://fonts.pycode.tk/open-sans.css"

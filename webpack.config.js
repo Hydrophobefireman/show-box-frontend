@@ -2,7 +2,8 @@ const minifier = require("terser-webpack-plugin"),
   HtmlWebpackPlugin = require("html-webpack-plugin"),
   MiniCssExtractPlugin = require("mini-css-extract-plugin"),
   autoPrefixPlugin = require("autoprefixer"),
-  configJS = require("./uiconfig.js"),
+  configJS = require("./configs/uiconfig.js"),
+  appConfig = require("./configs/appConfig.js"),
   StyleExtHtmlWebpackPlugin = require("style-ext-html-webpack-plugin");
 const mode = "development";
 // const mode = "production";
@@ -72,7 +73,7 @@ module.exports = {
       template: `${__dirname}/index.html`,
       xhtml: !0,
       favicon: "./favicon.ico",
-      uiConfig: configJS,
+      configs: [configJS, appConfig],
       minify: devOrProd(
         {
           collapseBooleanAttributes: !0,
