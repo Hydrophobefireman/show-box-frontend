@@ -8,8 +8,7 @@ module.exports = {
     INLINED_CONFIG: true,
     BUILD_DETAILS: {
       BUILD_TIME: new Date().toUTCString(),
-      SYS_INFO: { 
-		cpus:os.cpus(),
+      SYS_INFO: {
 		current_build_platform:os.platform(),
 	}
     }

@@ -14,7 +14,7 @@ import { ErrorComponent } from "./components/ErrorComponent/ErrorComponent.js";
 function NotFoundComponent() {
   return h("div", null, "The Requested URL was not found");
 }
-const shouldPrefetch = (window.__appConfig ||{}).SHOULD_PREFETCH_MODULES
+const shouldPrefetch = (window.__appConfig).SHOULD_PREFETCH_MODULES
 
 const getDefault = resolvedModule => resolvedModule.default;
 /**
@@ -24,27 +24,27 @@ const getDefault = resolvedModule => resolvedModule.default;
 const componentMap = {
   "/": () =>
     import(
-      /* webpackChunkName:"@lazy/landing"*/ "./components/LandingComponent/LandingComponent.js"
+      /* webpackChunkName:"/@lazy/landing"*/ "./components/LandingComponent/LandingComponent.js"
     ).then(getDefault),
   "/search": () =>
     import(
-      /* webpackChunkName:"@lazy/search-results"*/ "./components/SearchResultsComponent/SearchResultsComponent.js"
+      /* webpackChunkName:"/@lazy/search-results"*/ "./components/SearchResultsComponent/SearchResultsComponent.js"
     ).then(getDefault),
   "/all": () =>
     import(
-      /* webpackChunkName:"@lazy/all"*/ "./components/AllResultsComponent/AllResultsComponent.js"
+      /* webpackChunkName:"/@lazy/all"*/ "./components/AllResultsComponent/AllResultsComponent.js"
     ).then(getDefault),
   "/watch": () =>
     import(
-      /* webpackChunkName:"@lazy/player-component"*/ "./components/PlayerComponent/PlayerComponent.js"
+      /* webpackChunkName: "/@lazy/player-component"*/ "./components/PlayerComponent/PlayerComponent.js"
     ).then(getDefault),
   "/media/add": () =>
     import(
-      /* webpackChunkName:"@lazy/add-media"*/ "./components/AddMediaComponent/AddMediaComponent.js"
+      /* webpackChunkName:"/@lazy/add-media"*/ "./components/AddMediaComponent/AddMediaComponent.js"
     ).then(getDefault),
   "/out": () =>
     import(
-      /* webpackChunkName:"@lazy/out"*/ "./components/OutComponent/OutComponent.js"
+      /* webpackChunkName:"/@lazy/out"*/ "./components/OutComponent/OutComponent.js"
     ).then(getDefault)
 };
 export class AppLoader extends Component {
