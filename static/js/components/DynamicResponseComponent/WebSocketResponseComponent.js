@@ -1,6 +1,6 @@
 import Component, { createElement as h, A } from "../../@ui/ui-lib.js";
 import { getSocket } from "../../services/socket.js";
-import { getWatchURL, debounce } from "../../common.js";
+import { getWatchURL, decodeHTML, debounce } from "../../common.js";
 let socket;
 export class WebSocketResponseComponent extends Component {
   state = { resp: [], prevVal: "" };
@@ -31,8 +31,8 @@ export class WebSocketResponseComponent extends Component {
     socket.onmessage = this.onMessage;
     socket.sendString(v);
   }
-  componentWillUpdate = this.fetchResponses;
-  componentWillMount = this.fetchResponses;
+  componentWillUpdate = debounce(this.fetchResponses, 50, false, this);
+  componentWillMount = this.componentWillUpdate;
   render() {
     const cls = ["response-parent"];
     if (this.state.resp.length) cls.push("has-data");
