@@ -23,7 +23,7 @@ export class HeaderComponent extends Component {
     const prefs = JSON.parse(localStorage.getItem("prefs") || "{}");
     let q;
     if (window.matchMedia && (q = window.matchMedia(MQ_DARK))) {
-      prefs.darkMode = q.matches;
+      if (!("darkMode" in prefs)) prefs.darkMode = q.matches;
       q.addEventListener("change", e => this.setPreferences("dark", e.matches));
     }
     const c = {};

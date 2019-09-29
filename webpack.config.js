@@ -5,6 +5,8 @@ const minifier = require("terser-webpack-plugin"),
   configJS = require("./configs/uiconfig.js"),
   appConfig = require("./configs/appConfig.js"),
   StyleExtHtmlWebpackPlugin = require("style-ext-html-webpack-plugin");
+const BabelMultiTargetPlugin = require("webpack-babel-multi-target-plugin")
+  .BabelMultiTargetPlugin;
 const mode = "development";
 // const mode = "production";
 const devOrProd = (a, b) => {
@@ -18,26 +20,7 @@ module.exports = {
       {
         test: /\.m?js$/,
         exclude: /(node_modules)/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: [
-              [
-                "@babel/preset-env",
-                {
-                  corejs: "3.2.1",
-                  useBuiltIns: "usage",
-                  targets: ">0.5%,not ie 11,not op_mini all"
-                }
-              ]
-            ],
-            plugins: [
-              "@babel/plugin-transform-runtime",
-              "@babel/plugin-syntax-dynamic-import",
-              "@babel/plugin-proposal-class-properties"
-            ]
-          }
-        }
+        use: [BabelMultiTargetPlugin.loader()]
       },
       {
         test: /\.css$/,
@@ -68,6 +51,20 @@ module.exports = {
     }
   },
   plugins: [
+    new BabelMultiTargetPlugin({
+      babel: {
+        plugins: [
+          // "@babel/plugin-transform-runtime",
+          "@babel/plugin-proposal-class-properties"
+        ]
+      },
+      targets: {
+        legacy: { tagAssetsWithKey: true, key: "@legacy" },
+        modern: {
+          tagAssetsWithKey: false
+        }
+      }
+    }),
     new HtmlWebpackPlugin({
       inject: false,
       template: `${__dirname}/index.html`,
@@ -87,8 +84,8 @@ module.exports = {
       )
     }),
     new MiniCssExtractPlugin({
-      filename: "[name]-[hash].css",
-      chunkFilename: "[id]-[hash].css"
+      filename: "[name]-[contenthash].css",
+      chunkFilename: "[id]-[contenthash].css"
     }),
     new StyleExtHtmlWebpackPlugin({
       minify: devOrProd(!0, !1),

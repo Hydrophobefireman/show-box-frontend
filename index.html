@@ -8,27 +8,32 @@
     <link rel="preconnect" href="https://fonts.pycode.tk/" />
     <link rel="preconnect" href="https://res.cloudinary.com/" />
     <link rel="preconnect" href="https://show-box.herokuapp.com/" />
-
-<script>
-<% for (const {id,config} of htmlWebpackPlugin.options.configs) { %> window["<%= id %>"]=JSON.parse(<%= JSON.stringify(JSON.stringify(config)) %>);<% } %> 
-
-</script>
-
+    <script>
+      <%= require("./nodmodulefix.js" %>) ();
+    </script>
+    <script>
+        <% for (const { id, config } of htmlWebpackPlugin.options.configs) { %> window["<%= id %>"]=JSON.parse(<%= JSON.stringify(JSON.stringify(config)) %>);<% } %>; (function () {
+        window.__getLink = function (href, rel) {
+          var link = document.createElement("link");
+          link.rel = rel;
+          link.href = href;
+          document.head.appendChild(link);
+        };
+      })();
+    </script>
+    <%=
+    require("./htmlGenerator.js").generateScripts(htmlWebpackPlugin.files.chunks)
+    %>
     <link
       rel="preload"
       href="https://fonts.pycode.tk/open-sans.css"
       as="style"
     />
+    <%=
+    require("./htmlGenerator.js").generatePrefetch(webpack.assetsByChunkName) %>
     <meta content="width=device-width,initial-scale=1" name="viewport" />
-    <% for (const val of Object.values(htmlWebpackPlugin.files.chunks)) { %>
-    <link href="<%= val.entry %>" rel="preload" as="script" />
-    <% } %> <% for (const val of Object.values(htmlWebpackPlugin.files.chunks))
-    { %> <% if(!val.entry.includes("vendors")){ %>
-    <script defer src="<%= val.entry %>"></script>
-    <% } else{ %>
-    <script src="<%= val.entry %>"></script>
-    <% } %> <% } %>
   </head>
+
   <body>
     <div id="app-root" style="display: none"></div>
     <noscript>This Application uses JavaScript..</noscript>
