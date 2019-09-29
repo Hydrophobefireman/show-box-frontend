@@ -9,10 +9,10 @@ module.exports.generatePrefetch = scripts => {
       ? noModPreloadArr.push(normalize(scripts[x]))
       : modPreloadArr.push(normalize(scripts[x]))
   );
-  modPreloadArr.forEach(x => (mod += `window.__getLink("${x}","prefetch");`));
+  modPreloadArr.forEach(x => (mod += `window.__getLink("/${x}","prefetch");`));
   mod += "</script>";
   noModPreloadArr.forEach(
-    x => (noMod += `window.__getLink("${x}","prefetch");`)
+    x => (noMod += `window.__getLink("/${x}","prefetch");`)
   );
   noMod += "</script>";
   return mod + noMod;
@@ -30,20 +30,51 @@ function normalize(e) {
     return e.filter(isJS)[0];
   }
 }
+const getModuleArr = (v, vm, m) => (v ? vm : m);
+const iswebPackDevModule = e => {
+  const c = e.split("~");
+  let mainCount = 0;
+  for (const i of c) {
+    if (i.includes("main")) {
+      mainCount++;
+    }
+  }
+  return e.includes("@legacy") && mainCount > 1;
+};
 module.exports.generateScripts = files => {
-  const html = [];
+  const modules = [];
+  const vendorModules = [];
+  const noModules = [];
+  const vendorNomodules = [];
   for (const { entry: _entry } of Object.values(files)) {
     const entry = normalize(_entry);
     let src = '<script src="';
     const legacy = isLegacy(entry);
+    let vendor = false;
     const suff = legacy ? "nomodule" : 'type="module"';
     if (entry.includes("vendor")) {
-      src += `${entry}" ${legacy ? "nomodule" : ""}`;
+      vendor = true;
+      src += `/${entry}" ${
+        legacy && !iswebPackDevModule(entry) ? "nomodule" : ""
+      }`;
     } else {
-      src += `${entry}" defer ${suff}`;
+      src += `/${entry}" defer ${suff}`;
     }
     src += "></script>";
-    html.push(src);
+    [].push.call(
+      legacy
+        ? getModuleArr(vendor, vendorNomodules, noModules)
+        : getModuleArr(vendor, vendorModules, modules),
+      src
+    );
   }
-  return html.join("");
+  return (
+    vendorModules.join("") +
+    "\n" +
+    vendorNomodules.join("") +
+    "\n" +
+    modules.join("") +
+    "\n" +
+    noModules.join("")
+  );
 };

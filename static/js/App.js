@@ -18,7 +18,6 @@ const App = h(
   h(HeaderComponent),
   h("main", { class: "center" }, h(AppLoader))
 );
-
 const root = document.getElementById("app-root");
 root.removeAttribute("style");
 render(App, root);

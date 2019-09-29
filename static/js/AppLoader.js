@@ -40,7 +40,7 @@ const componentMap = {
     ).then(getDefault),
   "/media/add": () =>
     import(
-      /* webpackChunkName:"/@lazy/add-media"*/ "./components/AddMediaComponent/AddMediaComponent.js"
+      /* webpackChunkName:"@lazy/add-media"*/ "./components/AddMediaComponent/AddMediaComponent.js"
     ).then(getDefault),
   "/out": () =>
     import(

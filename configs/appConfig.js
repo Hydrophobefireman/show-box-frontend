@@ -9,8 +9,8 @@ module.exports = {
     BUILD_DETAILS: {
       BUILD_TIME: new Date().toUTCString(),
       SYS_INFO: {
-		current_build_platform:os.platform(),
-	}
+        current_build_platform: os.platform()
+      }
     }
   }
 };

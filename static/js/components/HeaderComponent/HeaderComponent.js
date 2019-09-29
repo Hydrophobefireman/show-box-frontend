@@ -13,7 +13,7 @@ export class HeaderComponent extends Component {
   state = {
     currentUrl: Router.getPath,
     showMenu: false,
-    preferences: { darkMode: false, zoom: false }
+    preferences: { darkMode: false, zoom: true }
   };
   onURLChange = () => this.setState({ currentUrl: Router.getPath });
   componentWillMount() {

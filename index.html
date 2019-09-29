@@ -9,10 +9,11 @@
     <link rel="preconnect" href="https://res.cloudinary.com/" />
     <link rel="preconnect" href="https://show-box.herokuapp.com/" />
     <script>
-      <%= require("./nodmodulefix.js" %>) ();
+      (<%=require("./nomodulefix.js")%>)()
     </script>
     <script>
-        <% for (const { id, config } of htmlWebpackPlugin.options.configs) { %> window["<%= id %>"]=JSON.parse(<%= JSON.stringify(JSON.stringify(config)) %>);<% } %>; (function () {
+       <% for (const {id,config} of htmlWebpackPlugin.options.configs) { %> window["<%= id %>"]=JSON.parse(<%= JSON.stringify(JSON.stringify(config)) %>);<% } %>
+       (function () {
         window.__getLink = function (href, rel) {
           var link = document.createElement("link");
           link.rel = rel;
@@ -21,9 +22,6 @@
         };
       })();
     </script>
-    <%=
-    require("./htmlGenerator.js").generateScripts(htmlWebpackPlugin.files.chunks)
-    %>
     <link
       rel="preload"
       href="https://fonts.pycode.tk/open-sans.css"
@@ -37,5 +35,8 @@
   <body>
     <div id="app-root" style="display: none"></div>
     <noscript>This Application uses JavaScript..</noscript>
+    <%=
+    require("./htmlGenerator.js").generateScripts(htmlWebpackPlugin.files.chunks)
+    %>
   </body>
 </html>
