@@ -29,6 +29,7 @@ export default class UIExperiments extends Component {
         break;
     }
   }
+  _toggleModal = () => this.setState(ps => ({ showModal: !ps.showModal }));
   _updateConf = data => this.setState({ experiments: data });
   componentDidUpdate() {
     if (this.state.showModal) {
@@ -38,15 +39,21 @@ export default class UIExperiments extends Component {
     }
     keys(this.state.experiments).forEach(this._reactToPrefChanges, this);
   }
-  render({ toggleUI }) {
+  render() {
     return h(
       Fragment,
       null,
-      h(UiModal, {
-        experiments: this.state.experiments,
-        updateConf: this._updateConf,
-        toggle: toggleUI
-      }),
+      h(
+        "button",
+        { class: "toggle-option", onClick: this._toggleModal },
+        "UI Experiments"
+      ),
+      this.state.showModal &&
+        h(UiModal, {
+          experiments: this.state.experiments,
+          updateConf: this._updateConf,
+          toggle: this._toggleModal
+        }),
       this.state.addStyleElement &&
         h("style", null, "*{text-transform:lowercase !important}")
     );

@@ -1,14 +1,11 @@
-import { h, Fragment, AsyncComponent } from "../../@ui/ui-lib";
-import { getDefault } from "../../lazyExports";
-const asyncUIExperiments = () => import("./UIExperiments.js").then(getDefault);
+import { h, Fragment } from "../../@ui/ui-lib";
+import UIExperiments from "./UIExperiments.js";
 const canZoom = "ontouchstart" in window || navigator.maxTouchPoints;
 export default function PreferenceComponent({
   preferences,
   setPreferences,
   removeMenu,
-  showMenu,
-  showUI,
-  toggleUI
+  showMenu
 }) {
   return h(
     Fragment,
@@ -38,13 +35,7 @@ export default function PreferenceComponent({
             preferences.zoom ? "Enabled" : "Disabled"
           )
         : null,
-      h(
-        "button",
-        { class: "toggle-option", onClick: toggleUI },
-        "UI Experiments"
-      ),
-      showUI &&
-        h(AsyncComponent, { componentPromise: asyncUIExperiments, toggleUI })
+      h(UIExperiments)
     )
   );
 }

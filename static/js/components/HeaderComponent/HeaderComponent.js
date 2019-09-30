@@ -4,18 +4,15 @@ import Component, {
   A,
   RouterSubscription,
   Router,
-  Fragment,
-  AsyncComponent
+  Fragment
 } from "../../@ui/ui-lib.js";
 import "./HeaderComponent.css";
-import { getDefault } from "../../lazyExports.js";
-const LazyPrefs = () => import("./PreferenceComponent.js").then(getDefault);
+import PreferenceComponent from "./PreferenceComponent.js";
 const MQ_DARK = "(prefers-color-scheme: dark)";
 export class HeaderComponent extends Component {
   state = {
     currentUrl: Router.getPath,
     showMenu: false,
-    showUI: false,
     preferences: { darkMode: false, zoom: true }
   };
   onURLChange = () => this.setState({ currentUrl: Router.getPath });
@@ -49,13 +46,12 @@ export class HeaderComponent extends Component {
       localStorage.setItem("prefs", JSON.stringify(prefs));
       return p;
     });
-  toggleUI = () => this.setState(p => ({ showUI: !p.showUI }));
   toggleMenu = () => this.setState(p => ({ showMenu: !p.showMenu }));
   // // // component will never unmount // // //
   //   componentWillUnmount() {
   //     RouterSubscription.unsubscribe(this.onUrlChange);
   //   }
-  render({}, { currentUrl, showMenu, preferences, showUI }) {
+  render({}, { currentUrl, showMenu, preferences }) {
     const c = h(
       Fragment,
       null,
@@ -86,14 +82,11 @@ export class HeaderComponent extends Component {
             "All Movies"
           )
       ),
-      h(AsyncComponent, {
-        componentPromise: LazyPrefs,
+      h(PreferenceComponent, {
         showMenu,
         preferences,
         setPreferences: this.setPreferences,
-        removeMenu: this.toggleMenu,
-        showUI,
-        toggleUI: this.toggleUI
+        removeMenu: this.toggleMenu
       })
     );
     return c;
