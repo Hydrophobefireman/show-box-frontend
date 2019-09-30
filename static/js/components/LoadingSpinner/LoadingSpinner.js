@@ -16,38 +16,41 @@ if (window.customElements) {
       }
     });
   };
-  window.customElements.define(
-    "loading-spinner",
-    class extends HTMLElement {
-      constructor() {
-        super();
-        const src = template.content.cloneNode(true);
-        const shadow = this.attachShadow({ mode: "open" });
-        shadow.appendChild(src);
-        installStringReflection(this, SIZE);
-        /**
-         * @type {HTMLDivElement}
-         */
-        this.div = shadow.querySelector(".spinner");
-      }
-      static get observedAttributes() {
-        return [SIZE];
-      }
-      attributeChangedCallback(name, oldVal, newVal) {
-        if (name === SIZE && newVal !== oldVal) {
-          const css = this.div.style;
-          css.height = css.width =
-            typeof newVal === "string" && newVal.includes("px")
-              ? newVal
-              : `${newVal}px`;
+  !window.customElements.get("loading-spinner") &&
+    window.customElements.define(
+      "loading-spinner",
+      class extends HTMLElement {
+        constructor() {
+          super();
+          const src = template.content.cloneNode(true);
+          const shadow = this.attachShadow({ mode: "open" });
+          shadow.appendChild(src);
+          installStringReflection(this, SIZE);
+          /**
+           * @type {HTMLDivElement}
+           */
+          this.div = shadow.querySelector(".spinner");
+        }
+        static get observedAttributes() {
+          return [SIZE];
+        }
+        attributeChangedCallback(name, oldVal, newVal) {
+          if (name === SIZE && newVal !== oldVal) {
+            const css = this.div.style;
+            css.height = css.width =
+              typeof newVal === "string" && newVal.includes("px")
+                ? newVal
+                : `${newVal}px`;
+          }
         }
       }
-    }
-  );
+    );
   spinner = h("loading-spinner", { size: 55 });
 } else {
   spinner = "Connecting to the server";
 }
-export function LoadingSpinner() {
+function LoadingSpinner() {
   return h(Fragment, null, spinner);
 }
+
+export { LoadingSpinner, LoadingSpinner as default };

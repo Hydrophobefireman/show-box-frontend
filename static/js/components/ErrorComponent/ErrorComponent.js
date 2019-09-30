@@ -1,5 +1,5 @@
 import { createElement as h } from "../../@ui/ui-lib.js";
-export function ErrorComponent({ onRetryClick }) {
+export default function ErrorComponent({ onRetryClick }) {
   return h(
     "div",
     null,

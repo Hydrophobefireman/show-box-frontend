@@ -34,19 +34,3 @@ export const Requests = {
     );
   }
 };
-
-let integrity;
-export const getIntegrity = async () => {
-  const data = await Requests.post(
-    "/api/get-integrity/",
-    true,
-    {
-      integrity,
-      $: !!integrity
-    },
-    { "content-type": "application/json" }
-  );
-  const js = await data.json();
-  integrity = js.token;
-  return integrity;
-};

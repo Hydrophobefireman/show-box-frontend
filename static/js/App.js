@@ -2,7 +2,9 @@ import { createElement as h, render, Fragment } from "./@ui/ui-lib.js";
 import "./App.css";
 import { HeaderComponent } from "./components/HeaderComponent/HeaderComponent.js";
 import { AppLoader } from "./AppLoader.js";
-import assign from "@hydrophobefireman/j-utils/@build-modern/src/modules/Object/assign.js";
+const assignProm = import(
+  "@hydrophobefireman/j-utils/@build-modern/src/modules/Object/assign.js"
+);
 /**
  * @CSS
  */
@@ -20,17 +22,19 @@ const App = h(
 );
 const root = document.getElementById("app-root");
 root.removeAttribute("style");
+const ns = document.querySelector("noscript");
+ns.remove ? ns.remove() : document.body.removeChild(ns);
 render(App, root);
 window.addEventListener(
   "load",
   () => {
-    const ns = document.querySelector("noscript");
-    ns.remove ? ns.remove() : document.body.removeChild(ns);
-    document.head.appendChild(
-      assign(document.createElement("link"), {
-        rel: "stylesheet",
-        href: "https://fonts.pycode.tk/open-sans.css"
-      })
+    assignProm.then(x =>
+      document.head.appendChild(
+        x.default(document.createElement("link"), {
+          rel: "stylesheet",
+          href: "https://fonts.pycode.tk/open-sans.css"
+        })
+      )
     );
   },
   { once: true }

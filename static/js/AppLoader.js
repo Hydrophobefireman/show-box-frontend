@@ -6,17 +6,18 @@ import Component, {
   redirect,
   Fragment
 } from "./@ui/ui-lib.js";
-import { Requests } from "./services/httpService.js";
+import {
+  RequestsPromise,
+  asyncLoadingSpinner,
+  getDefault,
+  asyncError
+} from "./lazyExports.js";
 import { retry } from "./common.js";
-import { LoadingSpinner } from "./components/LoadingSpinner/LoadingSpinner.js";
-import { ErrorComponent } from "./components/ErrorComponent/ErrorComponent.js";
-
 function NotFoundComponent() {
   return h("div", null, "The Requested URL was not found");
 }
-const shouldPrefetch = (window.__appConfig).SHOULD_PREFETCH_MODULES
+const shouldPrefetch = window.__appConfig.SHOULD_PREFETCH_MODULES;
 
-const getDefault = resolvedModule => resolvedModule.default;
 /**
  * @type {{[path:string]:()=>Promise<{default:Component}>}}
  */
@@ -51,7 +52,8 @@ export class AppLoader extends Component {
   state = {
     hasServerResponse: false,
     isContentLoadable: false,
-    errorComponent: ErrorComponent,
+    errorComponent: props =>
+      h(AsyncComponent, { componentPromise: asyncError, ...props }),
     hasPrefetchedComponents: false
   };
   _prefetchComponents() {
@@ -63,10 +65,10 @@ export class AppLoader extends Component {
   }
   _onMount = () => {
     if (!this.state.hasPrefetchedComponents) {
-    if(shouldPrefetch)  this._prefetchComponents();
+      if (shouldPrefetch) this._prefetchComponents();
       this.setState({ hasPrefetchedComponents: true });
     }
-    return Requests.get("/collect/");
+    RequestsPromise.then(x => x.Requests.get("/collect/"));
   };
   componentDidMount() {
     const qs = Router.getQs;
@@ -93,7 +95,7 @@ export class AppLoader extends Component {
       return h(
         Fragment,
         null,
-        h(LoadingSpinner),
+        h(AsyncComponent, { componentPromise: asyncLoadingSpinner }),
         h("div", null, "Connecting to the server")
       );
     } else {
