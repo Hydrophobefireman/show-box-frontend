@@ -59,14 +59,7 @@ export class ResultComponent extends Component {
       h("span", { class: "rec-title" }, decodeHTML(data.movie))
     );
     return !customOnClick
-      ? h(
-          A,
-          {
-            class: "rec-wrapper",
-            href: data.id ? getWatchURL(data.id, data.movie) : null
-          },
-          child
-        )
+      ? getLink(data, child)
       : h(
           "div",
           {
@@ -76,6 +69,18 @@ export class ResultComponent extends Component {
           child
         );
   }
+}
+function getLink(data, child) {
+  if (data.id)
+    return h(
+      A,
+      {
+        class: "rec-wrapper",
+        href: getWatchURL(data.id, data.movie)
+      },
+      child
+    );
+  return h("span", { class: "rec-wrapper" }, child);
 }
 class ImgComponent extends Component {
   state = { thumb: "" };
@@ -94,7 +99,7 @@ class ImgComponent extends Component {
   render({}, { thumb = "" }) {
     return h("div", {
       style: {
-        backgroundImage: !thumb ? "none" : `url(${thumb})` //`url(${thumb || "about:blank"})` 
+        backgroundImage: !thumb ? "none" : `url(${thumb})` //`url(${thumb || "about:blank"})`
       },
       class: "rec-image"
     });
