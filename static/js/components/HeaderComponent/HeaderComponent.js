@@ -79,7 +79,7 @@ export class HeaderComponent extends Component {
           h(
             A,
             { href: "/all", class: ["banner-button", "router-link"] },
-            "All Movies"
+            "All Shows"
           )
       ),
       h(PreferenceComponent, {

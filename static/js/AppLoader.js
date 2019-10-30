@@ -68,7 +68,7 @@ export class AppLoader extends Component {
       if (shouldPrefetch) this._prefetchComponents();
       this.setState({ hasPrefetchedComponents: true });
     }
-    RequestsPromise.then(x => x.Requests.get("/collect/"));
+    return RequestsPromise.then(x => x.Requests.get("/collect/"));
   };
   componentDidMount() {
     const qs = Router.getQs;
