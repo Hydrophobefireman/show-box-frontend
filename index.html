@@ -9,20 +9,15 @@
     <link rel="preconnect" href="https://res.cloudinary.com/" />
     <link rel="preconnect" href="https://show-box.herokuapp.com/" />
     <script>
-      <%=require("./nomodulefix.js")%>
-    </script>
-    <script>
        <% for (const {id,config} of htmlWebpackPlugin.options.configs) { %> window["<%= id %>"]=JSON.parse(<%= JSON.stringify(JSON.stringify(config)) %>);<% } %>
-       (function () {
+      <%= require("terser").minify( "("+function () {
         window.__getLink = function (href, rel) {
           var link = document.createElement("link");
           link.rel = rel;
           link.href = href;
           document.head.appendChild(link);
         };
-      })();
-      window.__getImport=<%= require("./htmlGenerator.js").importPolyFill %>;
-      window.__import=__getImport()
+      }+")()").code %>
     </script>
     <link
       rel="preload"
@@ -36,9 +31,5 @@
   <body>
     <div id="app-root" style="display: none"></div>
     <noscript>This Application uses JavaScript..</noscript>
-    <%=
-    require("./htmlGenerator.js").generateScripts(htmlWebpackPlugin.files.chunks)
-    %> <%=
-    require("./htmlGenerator.js").generatePrefetch(webpack.assetsByChunkName) %>
   </body>
 </html>

@@ -5,22 +5,30 @@ const minifier = require("terser-webpack-plugin"),
   configJS = require("./configs/uiconfig.js"),
   appConfig = require("./configs/appConfig.js"),
   StyleExtHtmlWebpackPlugin = require("style-ext-html-webpack-plugin");
-const BabelMultiTargetPlugin = require("webpack-babel-multi-target-plugin")
-  .BabelMultiTargetPlugin;
+const cfg = require("./.babelrc");
+const WebpackModuleNomodulePlugin = require("webpack-module-nomodule-plugin");
 // const mode = "development";
 const mode = "production";
-const devOrProd = (a, b) => {
+const prodOrDev = (a, b) => {
   return "production" === mode ? a : b;
 };
-
-module.exports = {
-  devServer: { contentBase: `${__dirname}/docs`, compress: !0, port: 4200 },
+const getCfg = isLegacy => ({
+  devServer: {
+    contentBase: `${__dirname}/docs`,
+    port: 4200,
+    historyApiFallback: true
+  },
   module: {
     rules: [
       {
         test: /\.m?js$/,
-        exclude: /(node_modules)/,
-        use: [BabelMultiTargetPlugin.loader()]
+        exclude: /(node_modules\/(?!@hydrophobefireman))|(nomodulefix)|(htmlGenerator)/,
+        use: [
+          {
+            loader: "babel-loader",
+            options: cfg.env[isLegacy ? "legacy" : "modern"]
+          }
+        ]
       },
       {
         test: /\.css$/,
@@ -42,36 +50,25 @@ module.exports = {
     ]
   },
   entry: `${__dirname}/static/js/App.js`,
-  output: { path: `${__dirname}/docs`, filename: "[name]-[contenthash].js" },
+  output: {
+    path: `${__dirname}/docs`,
+    filename: `[name]-[contenthash]${isLegacy ? "-@legacy" : "-modern"}.js`
+  },
   mode,
   optimization: {
-    minimizer: devOrProd([new minifier({ parallel: !0 })], []),
+    minimizer: prodOrDev([new minifier({ parallel: !0 })], []),
     splitChunks: {
       chunks: "all"
     }
   },
   plugins: [
-    new BabelMultiTargetPlugin({
-      babel: {
-        plugins: [
-          // "@babel/plugin-transform-runtime",
-          "@babel/plugin-proposal-class-properties"
-        ]
-      },
-      targets: {
-        legacy: { tagAssetsWithKey: true, key: "@legacy" },
-        modern: {
-          tagAssetsWithKey: false
-        }
-      }
-    }),
     new HtmlWebpackPlugin({
-      inject: false,
+      inject: "body",
       template: `${__dirname}/index.html`,
       xhtml: !0,
       favicon: "./favicon.ico",
       configs: [configJS, appConfig],
-      minify: devOrProd(
+      minify: prodOrDev(
         {
           collapseBooleanAttributes: !0,
           collapseWhitespace: !0,
@@ -83,13 +80,11 @@ module.exports = {
         !1
       )
     }),
-    new MiniCssExtractPlugin({
-      filename: "[name]-[contenthash].css",
-      chunkFilename: "[id]-[contenthash].css"
-    }),
+    new WebpackModuleNomodulePlugin(isLegacy ? "legacy" : "modern"),
+    new MiniCssExtractPlugin({}),
     new StyleExtHtmlWebpackPlugin({
-      minify: devOrProd(!0, !1),
-      position: "head-bottom"
+      minify: prodOrDev(!0, !1)
     })
   ]
-};
+});
+module.exports = prodOrDev([getCfg(false), getCfg(true)], getCfg(false));
