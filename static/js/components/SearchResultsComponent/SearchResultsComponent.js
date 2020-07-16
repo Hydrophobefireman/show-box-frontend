@@ -2,7 +2,7 @@ import Component, {
   createElement as h,
   Router,
   Fragment
-} from "../../@ui/ui-lib.js";
+} from "@hydrophobefireman/ui-lib";
 import { DynamicResponseComponent } from "../DynamicResponseComponent/DynamicResponseComponent.js";
 import { SearchComponent } from "./SearchComponent.js";
 export default class SearchResultsComponent extends Component {

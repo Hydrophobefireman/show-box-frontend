@@ -1,4 +1,4 @@
-import { createElement as h, Fragment } from "../../@ui/ui-lib.js";
+import { createElement as h, Fragment } from "@hydrophobefireman/ui-lib";
 let spinner;
 if (window.customElements) {
   const SIZE = "size";

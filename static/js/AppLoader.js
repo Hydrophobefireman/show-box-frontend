@@ -5,7 +5,7 @@ import Component, {
   absolutePath,
   redirect,
   Fragment
-} from "./@ui/ui-lib.js";
+} from "@hydrophobefireman/ui-lib";
 import {
   RequestsPromise,
   asyncLoadingSpinner,

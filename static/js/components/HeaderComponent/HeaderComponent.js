@@ -5,7 +5,7 @@ import Component, {
   RouterSubscription,
   Router,
   Fragment
-} from "../../@ui/ui-lib.js";
+} from "@hydrophobefireman/ui-lib";
 import "./HeaderComponent.css";
 import PreferenceComponent from "./PreferenceComponent.js";
 const MQ_DARK = "(prefers-color-scheme: dark)";

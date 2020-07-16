@@ -1,4 +1,4 @@
-import Component, { createElement as h, Fragment } from "../../@ui/ui-lib.js";
+import Component, { createElement as h, Fragment } from "@hydrophobefireman/ui-lib";
 import { Requests } from "../../services/httpService.js";
 import { defaultData } from "../SearchResultsComponent/SearchComponent.js";
 import { ResultComponent } from "../RecommendationsComponent/RecommendationsComponent.js";

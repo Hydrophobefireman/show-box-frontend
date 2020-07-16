@@ -1,5 +1,5 @@
 import { Requests } from "../../services/httpService.js";
-import { createElement as h } from "../../@ui/ui-lib.js";
+import { createElement as h } from "@hydrophobefireman/ui-lib";
 // import { compatMap, compatMapGet, compatMapSet } from "../../common.js";
 import _Map from "@hydrophobefireman/j-utils/@build-modern/src/modules/es6/loose/Map/index.js";
 export const defaultHTML =

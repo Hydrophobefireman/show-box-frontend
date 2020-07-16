@@ -1,4 +1,4 @@
-import { createElement as h } from "../../@ui/ui-lib.js";
+import { createElement as h } from "@hydrophobefireman/ui-lib";
 export default function ErrorComponent({ onRetryClick }) {
   return h(
     "div",

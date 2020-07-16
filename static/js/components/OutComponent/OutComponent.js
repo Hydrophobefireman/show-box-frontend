@@ -2,7 +2,7 @@ import Component, {
   createElement as h,
   Router,
   Fragment
-} from "../../@ui/ui-lib.js";
+} from "@hydrophobefireman/ui-lib";
 
 const CURRENT_AVAILABLE_WEBSITES = {
   "PROXY-PY.HEROKUAPP.COM": "https://proxy-py.herokuapp.com/video?url=",

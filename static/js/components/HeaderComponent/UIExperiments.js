@@ -1,4 +1,4 @@
-import { h, Component, Fragment } from "../../@ui/ui-lib";
+import { h, Component, Fragment } from "@hydrophobefireman/ui-lib";
 import values from "@hydrophobefireman/j-utils/@build-modern/src/modules/Object/values.js";
 import keys from "@hydrophobefireman/j-utils/@build-modern/src/modules/Object/keys.js";
 function normalize(obj) {

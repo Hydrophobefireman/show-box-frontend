@@ -1,7 +1,8 @@
-import { createElement as h, render, Fragment } from "./@ui/ui-lib.js";
+import { createElement as h, render, Fragment } from "@hydrophobefireman/ui-lib";
 import "./App.css";
 import { HeaderComponent } from "./components/HeaderComponent/HeaderComponent.js";
 import { AppLoader } from "./AppLoader.js";
+
 const assignProm = import(
   "@hydrophobefireman/j-utils/@build-modern/src/modules/Object/assign.js"
 );

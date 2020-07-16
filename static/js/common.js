@@ -1,4 +1,4 @@
-import { loadURL } from "./@ui/ui-lib.js";
+import { loadURL } from "@hydrophobefireman/ui-lib";
 export const defaultTitle = "Watch Shows on Show-Box";
 export {
   default as assign

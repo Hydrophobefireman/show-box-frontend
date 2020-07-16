@@ -1,4 +1,4 @@
-import Component, { createElement as h } from "../../@ui/ui-lib.js";
+import Component, { createElement as h } from "@hydrophobefireman/ui-lib";
 export class SearchBoxComponent extends Component {
   state = { isFocused: false, value: "" };
   onFocus = () => !this.state.value && this.setState({ isFocused: true });

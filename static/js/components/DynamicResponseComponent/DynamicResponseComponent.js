@@ -1,4 +1,4 @@
-import Component, { createElement as h, Fragment } from "../../@ui/ui-lib.js";
+import Component, { createElement as h, Fragment } from "@hydrophobefireman/ui-lib";
 import { SearchBoxComponent } from "../SearchBoxComponent/SearchBoxComponent.js";
 import { loadSearchResults, defaultTitle } from "../../common.js";
 import { WebSocketResponseComponent } from "./WebSocketResponseComponent.js";
